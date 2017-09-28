@@ -14,24 +14,27 @@ def searchImageByMatchTemplate(template, target, threshold):
 
 	(templateH, templateW) = template.shape[:2]
 
+	template = cv2.Canny(template, 50, 200)
 	(tH, tW) = target.shape[:2]
 	gray = cv2.cvtColor(target, cv2.COLOR_BGR2GRAY)
 	bFound = False
 	found = (threshold, (0,0), 0)
 
-	edged = cv2.Canny(target, 50, 200)
-	result = cv2.matchTemplate(edged, template, cv2.TM_CCOEFF)
+	edged = cv2.Canny(gray, 50, 200)
+	result = cv2.matchTemplate(edged, template, cv2.TM_CCOEFF_NORMED)
 	(_, maxVal, _, maxLoc) = cv2.minMaxLoc(result)
 
 	r = 1
 	# if we have found a new maximum correlation value, then ipdate
 	# the bookkeeping variable
-	if maxVal > found[0]:
-		#print('found: maxval = ', maxVal, 'r=', r)
+	print('maxVal = ', maxVal, ' threshold = ', threshold,)
+	if maxVal > threshold:
+		print('found: maxval = ', maxVal, 'r=', r)
 		bFound = True
 		found = (maxVal, maxLoc, r)
 
 	if bFound == False:
+		print('not found match')
 		return (bFound, None, 0, (0,0), (0,0))
 
 	(maxVal, maxLoc, r) = found
