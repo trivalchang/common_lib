@@ -32,4 +32,4 @@ def findDominantColor(image, clusterNo):
 	for (percent, color) in zip(hist, clt.cluster_centers_):
 		# plot the relative percentage of each cluster
 		colorList.append([int(percent), color.astype("uint8").tolist()])
-	return colorList
+	return sorted(colorList)
