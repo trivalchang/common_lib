@@ -20,8 +20,8 @@ def compareDominantColor(dominant0, dominant1):
 	dominant1 = sorted(dominant1)
 	color0 = []
 	color1 = []
-	print('dor0 ', dominant0)
-	print('dor1 ', dominant1)	
+	#print('dor0 ', dominant0)
+	#print('dor1 ', dominant1)	
 	for index in range(0, len(dominant0)):
 		#color0 = dominant0[index][0] * (dominant0[index][1][0] + dominant0[index][1][1] + dominant0[index][1][2])
 		#color1 = dominant1[index][0] * (dominant1[index][1][0] + dominant1[index][1][1] + dominant1[index][1][2])
@@ -55,9 +55,9 @@ def compareDominantColor(dominant0, dominant1):
 
 	diff = abs(color0[0]-color1[0])+abs(color0[1]-color1[1])+abs(color0[2]-color1[2])
 
-	print('color0 = ', color0)
-	print('color1 = ', color1)
-	print('diff ', diff)
+	#print('color0 = ', color0)
+	#print('color1 = ', color1)
+	#print('diff ', diff)
 	return diff
 
 def colorMatchSsim(template, target, channel, virtualized, x, y):

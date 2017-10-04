@@ -6,6 +6,7 @@ import argparse
 import imutils
 import glob
 import cv2
+import sys
 
 #template must be a canny image
 def searchImageByMatchTemplate(template, target, threshold):
@@ -20,8 +21,13 @@ def searchImageByMatchTemplate(template, target, threshold):
 	found = (threshold, (0,0), 0)
 
 	edged = cv2.Canny(gray, 50, 200)
-	result = cv2.matchTemplate(edged, template, cv2.TM_CCOEFF_NORMED)
-	(_, maxVal, _, maxLoc) = cv2.minMaxLoc(result)
+	try:
+		result = cv2.matchTemplate(edged, template, cv2.TM_CCOEFF_NORMED)
+		(_, maxVal, _, maxLoc) = cv2.minMaxLoc(result)
+	except:
+		print('target= ', (tW, tH)) 
+		print('Template= ', (templateW, templateH))
+		sys.exit()
 
 	r = 1
 	# if we have found a new maximum correlation value, then ipdate
@@ -33,7 +39,7 @@ def searchImageByMatchTemplate(template, target, threshold):
 		found = (maxVal, maxLoc, r)
 
 	if bFound == False:
-		print('not found match', maxVal)
+		#print('not found match', maxVal)
 		return (bFound, None, 0, [0,0, 0,0])
 
 	(maxVal, maxLoc, r) = found
